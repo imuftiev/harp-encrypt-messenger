@@ -1,0 +1,18 @@
+[project]
+name = "harp"
+version = "1.0.0"
+description = "Harp Messanger — is a web-application for secure exchange between users, with the ability to choose an encrpytion algorithm."
+authors = [
+    {name = "imcode",email = "128029980+ilyas11m@users.noreply.github.com"}
+]
+license = "Apache 2.0"
+requires-python = ">=3.14"
+dependencies = [
+    "sqlalchemy (>=2.1.2,<3.0.0)",
+    "alembic (>=1.20.0,<2.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
