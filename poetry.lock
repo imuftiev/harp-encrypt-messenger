@@ -794,6 +794,22 @@ pymysql = ["pymysql"]
 sqlcipher = ["sqlcipher3_binary"]
 
 [[package]]
+name = "sqlalchemy-crud-plus"
+version = "1.13.3"
+description = "Advanced asynchronous CRUD SDK built on SQLAlchemy 2.0"
+optional = false
+python-versions = ">=3.10"
+groups = ["main"]
+files = [
+    {file = "sqlalchemy_crud_plus-1.13.3-py3-none-any.whl", hash = "sha256:89732b9e56aeb23ac91664c938242656ef5899fafaea13d7345cbc03b0138103"},
+    {file = "sqlalchemy_crud_plus-1.13.3.tar.gz", hash = "sha256:ccb9783b5af74410d79300166a20ab86b66e477fe1298584a893d854d5378264"},
+]
+
+[package.dependencies]
+pydantic = ">=2.0"
+sqlalchemy = {version = ">=2.0.0", extras = ["asyncio"]}
+
+[[package]]
 name = "starlette"
 version = "1.10.0"
 description = "The little ASGI library that shines."
@@ -860,4 +876,4 @@ standard = ["httptools (>=0.8.0)", "python-dotenv (>=0.13)", "pyyaml (>=5.1)", "
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.14"
-content-hash = "76e56cffc4f51e57756c18d785adb55666a686ed600ea7c321641c80e82de9c4"
+content-hash = "bc3e685e1dd9bd74e485a48018f919c917f58986f651ced57baf5da76ef39c8a"

@@ -2,7 +2,7 @@ import asyncio
 import os
 from dotenv import load_dotenv
 from logging.config import fileConfig
-from infrastracture import Base
+from db import Base
 import models
 from sqlalchemy import pool
 from sqlalchemy.engine import Connection
