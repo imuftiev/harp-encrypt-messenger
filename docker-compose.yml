@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   db:
-    container_name: harp-database
+    container_name: harp-infrastracture
     image: postgres:latest
     env_file:
       - .env

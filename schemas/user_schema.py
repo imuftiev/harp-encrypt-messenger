@@ -1,4 +1,8 @@
+from pydantic import BaseModel, ConfigDict
 
 
-class UserResponse:
+class UserResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    username: str
+    email: str
 

@@ -1,6 +1,6 @@
 import uuid
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from database.base import Base
+from infrastracture.base import Base
 from models import Role
 
 
