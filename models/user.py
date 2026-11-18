@@ -1,7 +1,8 @@
 import uuid
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from infrastracture.base import Base
-from models import Role
+from db.base import Base
+from models.role import Role
+from models.message import Message
 
 
 class User(Base):
@@ -22,7 +23,7 @@ class User(Base):
     password: Mapped[str] = mapped_column(
         nullable=False
     )
-    role: Mapped[Role]
+    role: Mapped["Role"]
 
     sent_messages: Mapped[list["Message"]] = relationship(
         back_populates="sender",
