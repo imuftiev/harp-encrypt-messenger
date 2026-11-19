@@ -1,5 +1,13 @@
 from fastapi import FastAPI
-from api.user import router
+from controller.user import router
+from core.exception.exception_handler import register_error_handlers
 
-app = FastAPI()
-app.include_router(router)
+
+def create_app() -> FastAPI:
+    app = FastAPI()
+    register_error_handlers(app)
+    app.include_router(router)
+    return app
+
+
+app = create_app()
