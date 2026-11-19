@@ -1,8 +1,8 @@
 import uuid
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from db.base import Base
-from models.role import Role
-from models.message import Message
+from model.role import Role
+from model.message import Message
 
 
 class User(Base):
@@ -20,7 +20,7 @@ class User(Base):
         unique=True,
         nullable=False
     )
-    password: Mapped[str] = mapped_column(
+    password_hash: Mapped[str] = mapped_column(
         nullable=False
     )
     role: Mapped["Role"]

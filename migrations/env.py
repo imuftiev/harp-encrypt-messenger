@@ -3,7 +3,9 @@ import os
 from dotenv import load_dotenv
 from logging.config import fileConfig
 from db import Base
-import models
+import model
+from model.user import User
+from model.message import Message
 from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config

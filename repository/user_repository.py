@@ -1,8 +1,8 @@
-from sqlalchemy import select
+from sqlalchemy import select, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 from schema.user import UserCreate, UserRequest
-from models.user import User
-from models.role import Role
+from model.user import User
+from model.role import Role
 
 
 class UserRepository:
@@ -14,7 +14,7 @@ class UserRepository:
         user = User(
             username=user_create.username,
             email=user_create.email,
-            password=user_create.password,
+            password_hash=user_create.password,
             role=Role.USER
         )
         self.session.add(user)
@@ -30,3 +30,7 @@ class UserRepository:
         result = await self.session.execute(select(User).filter_by(username=user_request.username))
         user = result.scalar()
         return user
+
+    async def delete(self, user_request: UserRequest) -> None:
+        await self.session.execute(delete(User).filter_by(username=user_request.username))
+        await self.session.commit()

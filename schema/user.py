@@ -1,5 +1,5 @@
 from pydantic import BaseModel, ConfigDict
-from models.user import User
+from model.user import User
 
 
 class UserResponse(BaseModel):
