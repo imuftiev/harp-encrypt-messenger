@@ -20,6 +20,12 @@ class UserCreate(BaseModel):
     password: str
 
 
+class UserAuthentication(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    login: str
+    password: str
+
+
 def to_user_response(user: User) -> UserResponse:
     return UserResponse(
         username=user.username,

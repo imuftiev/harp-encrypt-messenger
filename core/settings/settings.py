@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     postgres_password: str
     postgres_db: str
     secret_key: str
-    algorithm: str
+    access_token_encrypt_algorithm: str
     access_token_expires_minutes: int
 
     @property

@@ -1,1 +1,0 @@
-from core.settings.settings import get_settings
