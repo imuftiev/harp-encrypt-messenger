@@ -1,4 +1,4 @@
-from sqlalchemy import select, delete
+from sqlalchemy import select, delete, or_
 from sqlalchemy.ext.asyncio import AsyncSession
 from schema.user import UserCreate, UserRequest
 from model.user import User
@@ -26,10 +26,15 @@ class UserRepository:
         users = result.scalars()
         return list(users)
 
-    async def get_by_username(self, user_request: UserRequest) -> User | None:
-        result = await self.session.execute(select(User).filter_by(username=user_request.username))
-        user = result.scalar()
-        return user
+    async def get_by_login(self, login: str) -> User | None:
+        stmt = select(User).where(
+            or_(
+                User.username == login,
+                User.email == login
+            )
+        )
+        result = await self.session.execute(stmt)
+        return result.scalar_one_or_none()
 
     async def delete(self, user_request: UserRequest) -> None:
         await self.session.execute(delete(User).filter_by(username=user_request.username))

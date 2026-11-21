@@ -1,9 +1,9 @@
 from http import HTTPStatus
 from typing import Annotated
 from fastapi import APIRouter, HTTPException, Depends
-from schema import UserResponse, UserCreate
-from core import get_user_service
-from service import UserService
+from schema.user import UserCreate, UserResponse
+from core.dependencies.dependencies import get_user_service
+from service.user_service import UserService
 
 router = APIRouter(prefix='/users')
 

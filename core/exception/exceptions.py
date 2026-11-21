@@ -13,6 +13,11 @@ class NotFoundError(AppError):
     message = "Resource not found"
 
 
+class InvalidCredentialsError(AppError):
+    code = "invalid"
+    message = "Invalid credentials"
+
+
 class ConflictError(AppError):
     code = "conflict"
     message = "Resource already exists"

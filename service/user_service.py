@@ -1,8 +1,8 @@
 from pwdlib import PasswordHash
+from core.exception.errors import UserNotFound
 from repository.user_repository import UserRepository
-from schema import UserCreate, UserResponse
-from schema import to_user_response, to_user_request
-from core import UserNotFound
+from schema.user import UserCreate, UserResponse
+from schema.user import to_user_response, to_user_request
 
 
 class UserService:
@@ -18,7 +18,7 @@ class UserService:
 
     async def get_by_username(self, username: str) -> UserResponse:
         user_request = to_user_request(username)
-        user = await self.repository.get_by_username(user_request)
+        user = await self.repository.get_by_username(user_request.username)
         if not user:
             raise UserNotFound(f"User with username: {username} not found!")
         return to_user_response(user)
