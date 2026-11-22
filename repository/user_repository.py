@@ -30,6 +30,11 @@ class UserRepository:
             raise
         return user
 
+    async def get_by_uuid(self, user_id: str) -> User | None:
+        stmt = select(User).filter_by(user_id=user_id)
+        user = await self.session.execute(stmt)
+        return user.scalar_one_or_none()
+
     async def get_all(self) -> list[User]:
         result = await self.session.execute(select(User))
         users = result.scalars()

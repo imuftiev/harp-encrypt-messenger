@@ -1,8 +1,11 @@
+from uuid import UUID
+
 from pwdlib import PasswordHash
 from core.exception.errors import UserNotFound
 from repository.user_repository import UserRepository
 from schema.user import UserCreate, UserResponse
 from schema.user import to_user_response, to_user_request
+from core.security.security import verify_jwt_token
 
 
 class UserService:
@@ -14,6 +17,10 @@ class UserService:
     async def create(self, user_create: UserCreate) -> UserResponse:
         user_create.password = self.password_hash.hash(user_create.password)
         user = await self.repository.create(user_create)
+        return to_user_response(user)
+
+    async def get_by_uuid(self, user_id: UUID) -> UserResponse:
+        user = await self.repository.get_by_uuid(str(user_id))
         return to_user_response(user)
 
     async def get_by_username(self, username: str) -> UserResponse:
