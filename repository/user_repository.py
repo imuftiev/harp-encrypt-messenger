@@ -2,7 +2,7 @@ from sqlalchemy import select, delete, or_
 from sqlalchemy.ext.asyncio import AsyncSession
 from schema.user import UserCreate, UserRequest
 from model.user import User
-from model.role import Role
+from core.exception.errors import UserEmailAlreadyExists, UserUsernameAlreadyExists
 
 
 class UserRepository:
@@ -15,10 +15,19 @@ class UserRepository:
             username=user_create.username,
             email=user_create.email,
             password_hash=user_create.password,
-            role=Role.USER
+            role=user_create.role
         )
-        self.session.add(user)
-        await self.session.commit()
+        try:
+            self.session.add(user)
+            await self.session.commit()
+        except Exception as exc:
+            await self.session.rollback()
+            original_error = getattr(exc, "driver_exception", None)
+            if original_error.constraint_name == "users_email_key":
+                raise UserEmailAlreadyExists
+            elif original_error.constraint_name == "users_username_key":
+                raise UserUsernameAlreadyExists
+            raise
         return user
 
     async def get_all(self) -> list[User]:
@@ -36,6 +45,20 @@ class UserRepository:
         result = await self.session.execute(stmt)
         return result.scalar_one_or_none()
 
+    async def get_by_username(self, username: str) -> User | None:
+        stmt = select(User).filter_by(username=username)
+        result = await self.session.execute(stmt)
+        return result.scalar_one_or_none()
+
+    async def get_by_email(self, email: str) -> User | None:
+        stmt = select(User).filter_by(email=email)
+        result = await self.session.execute(stmt)
+        return result.scalar_one_or_none()
+
     async def delete(self, user_request: UserRequest) -> None:
         await self.session.execute(delete(User).filter_by(username=user_request.username))
+        await self.session.commit()
+
+    async def delete_all(self) -> None:
+        await self.session.execute(delete(User))
         await self.session.commit()

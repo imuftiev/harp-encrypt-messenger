@@ -1,5 +1,7 @@
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 from model.user import User
+from model.role import UserRole
+from pydantic import EmailStr
 
 
 class UserResponse(BaseModel):
@@ -10,14 +12,16 @@ class UserResponse(BaseModel):
 
 class UserRequest(BaseModel):
     model_config = ConfigDict(from_attributes=True)
-    username: str
+    username: str | None = None
+    email: EmailStr | None = None
 
 
 class UserCreate(BaseModel):
     model_config = ConfigDict(from_attributes=True)
-    username: str
-    email: str
+    username: str = Field(max_length=16, min_length=3)
+    email: EmailStr
     password: str
+    role: UserRole | None = UserRole.USER
 
 
 class UserAuthentication(BaseModel):
@@ -33,7 +37,8 @@ def to_user_response(user: User) -> UserResponse:
     )
 
 
-def to_user_request(username: str) -> UserRequest:
+def to_user_request(username: str | None = None, email: str | None = None) -> UserRequest:
     return UserRequest(
-        username=username
+        username=username,
+        email=email
     )

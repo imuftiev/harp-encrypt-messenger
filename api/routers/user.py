@@ -9,6 +9,29 @@ router = APIRouter(prefix='/users')
 
 
 @router.get(
+    "/all",
+    response_model=list[UserResponse],
+    status_code=HTTPStatus.OK
+)
+async def get_all_users(user_service: Annotated[UserService, Depends(get_user_service)]):
+    users = await user_service.get_all()
+    return users
+
+
+@router.get(
+    "/email",
+    response_model=UserResponse,
+    status_code=HTTPStatus.OK
+)
+async def get_user_by_email(
+        email: str,
+        user_service: Annotated[UserService, Depends(get_user_service)]
+):
+    user = await user_service.get_by_email(email)
+    return user
+
+
+@router.get(
     "/{username}",
     response_model=UserResponse,
     status_code=HTTPStatus.OK
@@ -21,20 +44,8 @@ async def get_user_by_username(
     return user
 
 
-@router.get(
-    "/",
-    response_model=list[UserResponse],
-    status_code=HTTPStatus.OK
-)
-async def get_all_users(user_service: Annotated[UserService, Depends(get_user_service)]):
-    users = await user_service.get_all()
-    if not users:
-        raise HTTPException(status_code=HTTPStatus.NOT_FOUND)
-    return users
-
-
 @router.post(
-    "/",
+    "/signup",
     status_code=HTTPStatus.CREATED,
     response_model=UserResponse
 )
@@ -45,7 +56,7 @@ async def create_user(user_create: UserCreate,
 
 
 @router.put(
-    "/",
+    "/update",
     status_code=HTTPStatus.ACCEPTED,
     response_model=UserResponse
 )
@@ -57,3 +68,8 @@ async def update_username():
 async def delete(username: str,
                  user_service: Annotated[UserService, Depends(get_user_service)]) -> None:
     await user_service.delete(username)
+
+
+@router.delete("/all", status_code=HTTPStatus.ACCEPTED)
+async def delete(user_service: Annotated[UserService, Depends(get_user_service)]) -> None:
+    await user_service.delete_all()

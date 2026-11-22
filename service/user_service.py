@@ -17,10 +17,17 @@ class UserService:
         return to_user_response(user)
 
     async def get_by_username(self, username: str) -> UserResponse:
-        user_request = to_user_request(username)
+        user_request = to_user_request(username=username)
         user = await self.repository.get_by_username(user_request.username)
         if not user:
             raise UserNotFound(f"User with username: {username} not found!")
+        return to_user_response(user)
+
+    async def get_by_email(self, email: str) -> UserResponse:
+        user_request = to_user_request(email=email)
+        user = await self.repository.get_by_email(user_request.email)
+        if not user:
+            raise UserNotFound(f"User with email: {email} not found!")
         return to_user_response(user)
 
     async def get_all(self) -> list[UserResponse]:
@@ -30,3 +37,6 @@ class UserService:
     async def delete(self, username: str) -> None:
         user_request = to_user_request(username)
         await self.repository.delete(user_request)
+
+    async def delete_all(self) -> None:
+        await self.repository.delete_all()
