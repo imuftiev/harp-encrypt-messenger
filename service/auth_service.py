@@ -3,6 +3,7 @@ from repository.user_repository import UserRepository
 from schema.user import UserAuthentication
 from model.user import User
 from core.exception.errors import InvalidCredentials
+from core.security.security import create_jwt_token
 
 
 class AuthenticationService:
@@ -13,16 +14,20 @@ class AuthenticationService:
 
     async def login(self, user_authentication: UserAuthentication):
         user = await self.authenticate_user(user_authentication)
-        return user
+        token = create_jwt_token(user)
+        return {
+            "access_token": token,
+            "token_type": "Bearer"
+        }
 
     async def authenticate_user(self, user_authentication: UserAuthentication) -> User:
         user = await self.repository.get_by_login(user_authentication.login)
         if not user:
-            raise InvalidCredentials("неправильный логин")
+            raise InvalidCredentials("No user found with matching email/username")
         password = user.password_hash
         if not self.password_hash.verify(
                 user_authentication.password,
                 password
         ):
-            raise InvalidCredentials("неверный пароль")
+            raise InvalidCredentials("Invalid password")
         return user

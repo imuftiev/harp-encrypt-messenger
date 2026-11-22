@@ -9,20 +9,20 @@ class AppError(Exception):
 
 
 class NotFoundError(AppError):
-    code = "not_found"
+    code = "NOT_FOUND"
     message = "Resource not found"
 
 
 class InvalidCredentialsError(AppError):
-    code = "invalid"
+    code = "INVALID"
     message = "Invalid credentials"
 
 
 class ConflictError(AppError):
-    code = "conflict"
+    code = "CONFLICT"
     message = "Resource already exists"
 
 
 class ForbiddenError(AppError):
-    code = "forbidden"
+    code = "FORBIDDEN"
     message = "Access denied"

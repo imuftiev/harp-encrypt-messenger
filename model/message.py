@@ -3,7 +3,7 @@ import uuid
 from sqlalchemy import String, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from db.base import Base
+from core.db.base import Base
 
 
 class Message(Base):

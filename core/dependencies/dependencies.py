@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from service.user_service import UserService
 from service.auth_service import AuthenticationService
 from repository.user_repository import UserRepository
-from db.session import get_session
+from core.db.session import get_session
 
 
 def get_password_hash() -> PasswordHash:

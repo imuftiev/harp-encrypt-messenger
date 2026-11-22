@@ -6,11 +6,16 @@ class UserNotFound(NotFoundError):
     message = "User not found"
 
 
-class UserAlreadyExists(ConflictError):
-    code = "user_already_exists"
+class UserEmailAlreadyExists(ConflictError):
+    code = "user_email_already_exists"
     message = "User with this email already exists"
 
 
+class UserUsernameAlreadyExists(ConflictError):
+    code = "user_username_already_exists"
+    message = "User with this username already exists"
+
+
 class InvalidCredentials(InvalidCredentialsError):
-    code = "invalid_user_credentials"
+    code = "invalid_credentials"
     message = "Invalid user credentials"

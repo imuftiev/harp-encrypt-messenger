@@ -1,7 +1,8 @@
 import uuid
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from db.base import Base
-from model.role import Role
+from sqlalchemy import Enum as SAEnum
+from core.db.base import Base
+from model.role import UserRole
 from model.message import Message
 
 
@@ -23,7 +24,16 @@ class User(Base):
     password_hash: Mapped[str] = mapped_column(
         nullable=False
     )
-    role: Mapped["Role"]
+    role: Mapped["UserRole"] = mapped_column(
+        SAEnum(
+            UserRole,
+            name="role",
+            native_enum=False,
+            creative_constraint=True
+        ),
+        nullable=False,
+        default=UserRole.GUEST
+    )
 
     sent_messages: Mapped[list["Message"]] = relationship(
         back_populates="sender",
