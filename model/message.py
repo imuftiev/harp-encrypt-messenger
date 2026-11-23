@@ -1,8 +1,9 @@
 import datetime
 import uuid
+from model.encryption import Encryption
+from sqlalchemy import Enum as SAEnum
 from sqlalchemy import String, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-
 from core.db.base import Base
 
 
@@ -10,15 +11,26 @@ class Message(Base):
     __tablename__ = "messages"
 
     message_id: Mapped[uuid.UUID] = mapped_column(
-        primary_key=True
+        primary_key=True,
+        default=uuid.uuid4
     )
     message: Mapped[str] = mapped_column(
         String(255),
         nullable=False
     )
-    encrypt_type: Mapped[str]
-    time_sent: Mapped[datetime.datetime] = mapped_column(
-        nullable=False
+    encrypt_type: Mapped["Encryption"] = mapped_column(
+        SAEnum(
+            Encryption,
+            name="encrypt_type",
+            native_enum=False,
+            create_constraint=True
+        ),
+        nullable=False,
+        default=Encryption.PLAIN
+    )
+    created_at: Mapped[datetime.datetime] = mapped_column(
+        nullable=False,
+        default=datetime.datetime.now()
     )
 
     sender_id: Mapped[uuid.UUID] = mapped_column(

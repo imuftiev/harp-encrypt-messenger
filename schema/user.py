@@ -16,6 +16,14 @@ class UserRequest(BaseModel):
     email: EmailStr | None = None
 
 
+class UserSender(BaseModel):
+    user_id: str
+
+
+class UserReceiver(BaseModel):
+    user_id: str
+
+
 class UserCreate(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     username: str = Field(max_length=16, min_length=3)

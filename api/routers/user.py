@@ -77,12 +77,12 @@ async def update_username():
     pass
 
 
-@router.delete("/", status_code=HTTPStatus.ACCEPTED)
+@router.delete("/", status_code=HTTPStatus.NO_CONTENT)
 async def delete(username: str,
                  user_service: Annotated[UserService, Depends(get_user_service)]) -> None:
     await user_service.delete(username)
 
 
-@router.delete("/all", status_code=HTTPStatus.ACCEPTED)
+@router.delete("/all", status_code=HTTPStatus.NO_CONTENT)
 async def delete(user_service: Annotated[UserService, Depends(get_user_service)]) -> None:
     await user_service.delete_all()

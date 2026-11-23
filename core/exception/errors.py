@@ -14,8 +14,3 @@ class UserEmailAlreadyExists(ConflictError):
 class UserUsernameAlreadyExists(ConflictError):
     code = "user_username_already_exists"
     message = "User with this username already exists"
-
-
-class InvalidCredentials(InvalidCredentialsError):
-    code = "invalid_credentials"
-    message = "Invalid user credentials"

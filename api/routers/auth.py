@@ -14,6 +14,4 @@ async def auth(
         user_authentication: UserAuthentication,
         auth_service: Annotated[AuthenticationService, Depends(get_auth_service)]) -> Any:
     token = await auth_service.login(user_authentication)
-    if not token:
-        return "Unauthorized!"
     return token

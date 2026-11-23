@@ -29,7 +29,7 @@ class User(Base):
             UserRole,
             name="role",
             native_enum=False,
-            creative_constraint=True
+            create_constraint=True
         ),
         nullable=False,
         default=UserRole.GUEST

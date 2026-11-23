@@ -12,6 +12,10 @@ class NotFoundError(AppError):
     code = "NOT_FOUND"
     message = "Resource not found"
 
+class AuthenticationError(AppError):
+    code = "AUTHENTICATION_ERROR"
+    message = "Authentication error"
+
 
 class InvalidCredentialsError(AppError):
     code = "INVALID"

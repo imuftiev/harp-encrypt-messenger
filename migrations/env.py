@@ -3,10 +3,12 @@ import os
 from dotenv import load_dotenv
 from logging.config import fileConfig
 from core.db.base import Base
+from model.user import User
+from model.message import Message
+from model.role import UserRole
 from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
-
 from alembic import context
 
 config = context.config
@@ -24,6 +26,7 @@ if config.config_file_name is not None:
 
 target_metadata = Base.metadata
 print("Tables:", list(target_metadata.tables.keys()))
+
 
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
