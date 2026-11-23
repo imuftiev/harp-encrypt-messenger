@@ -1,0 +1,10 @@
+.venv
+.pyc
+__pycache__/
+/__pycache__/
+.env
+*.py[cod]
+*$py.class
+.idea/
+.idea
+/frontend/README.md
