@@ -5,7 +5,6 @@ from core.exception.errors import UserNotFound
 from repository.user_repository import UserRepository
 from schema.user import UserCreate, UserResponse
 from schema.user import to_user_response, to_user_request
-from core.security.security import verify_jwt_token
 
 
 class UserService:

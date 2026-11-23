@@ -3,9 +3,11 @@ from pwdlib import PasswordHash
 from fastapi.params import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from service.user_service import UserService
+from service.message_service import MessageService
 from service.auth_service import AuthenticationService
 from repository.user_repository import UserRepository
 from core.db.session import get_session
+from repository.message_repository import MessageRepository
 
 
 def get_password_hash() -> PasswordHash:
@@ -31,3 +33,15 @@ def get_auth_service(
         password_hash: Annotated[PasswordHash, Depends(get_password_hash)]
 ) -> AuthenticationService:
     return AuthenticationService(user_repository, password_hash)
+
+
+def get_message_repository(
+        session: Annotated[AsyncSession, Depends(get_session)]
+) -> MessageRepository:
+    return MessageRepository(session)
+
+
+def get_message_service(
+        message_repository: Annotated[MessageRepository, Depends(get_message_repository)]
+) -> MessageService:
+    return MessageService(message_repository)
