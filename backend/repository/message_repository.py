@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-from backend.schema.message import MessageCreateData
-from backend.model.message import Message
+from schema.message import MessageCreateData
+from model.message import Message
 
 
 class MessageRepository:

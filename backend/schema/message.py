@@ -2,7 +2,7 @@ import datetime
 from uuid import UUID
 
 from pydantic import BaseModel
-from backend.model.encryption import Encryption
+from model.encryption import Encryption
 
 
 class MessageCreateRequest(BaseModel):

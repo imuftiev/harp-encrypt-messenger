@@ -1,9 +1,9 @@
 from pwdlib import PasswordHash
-from backend.repository.user_repository import UserRepository
-from backend.schema.user import UserAuthentication
-from backend.model.user import User
-from backend.core.exception.errors import InvalidCredentialsError
-from backend.core.security.security import create_jwt_token
+from repository.user_repository import UserRepository
+from schema.user import UserAuthentication
+from model.user import User
+from core.exception.errors import InvalidCredentialsError
+from core.security.security import create_jwt_token
 
 
 class AuthenticationService:

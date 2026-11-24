@@ -1,10 +1,10 @@
 from uuid import UUID
 
 from pwdlib import PasswordHash
-from backend.core.exception.errors import UserNotFound
-from backend.repository.user_repository import UserRepository
-from backend.schema.user import UserCreate, UserResponse
-from backend.schema.user import to_user_response, to_user_request
+from core.exception.errors import UserNotFound
+from repository.user_repository import UserRepository
+from schema.user import UserCreate, UserResponse
+from schema.user import to_user_response, to_user_request
 
 
 class UserService:

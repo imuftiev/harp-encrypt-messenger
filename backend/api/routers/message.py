@@ -1,12 +1,12 @@
 from http import HTTPStatus
 from typing import Annotated
 from uuid import UUID
-from backend.service.message_service import MessageService
+from service.message_service import MessageService
 from fastapi.params import Depends
-from backend.schema.message import MessageCreateRequest, MessageResponse
-from backend.core.security.security import verify_jwt_token
+from schema.message import MessageCreateRequest, MessageResponse
+from core.security.security import verify_jwt_token
 from fastapi import APIRouter
-from backend.core.dependencies.dependencies import get_message_service
+from core.dependencies.dependencies import get_message_service
 
 router = APIRouter(prefix="/messages")
 

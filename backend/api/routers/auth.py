@@ -1,8 +1,8 @@
 from typing import Annotated, Any
-from backend.service.auth_service import AuthenticationService
+from service.auth_service import AuthenticationService
 from fastapi.params import Depends
-from backend.core.dependencies.dependencies import get_auth_service
-from backend.schema.user import UserAuthentication
+from core.dependencies.dependencies import get_auth_service
+from schema.user import UserAuthentication
 
 from fastapi import APIRouter
 
