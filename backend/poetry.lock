@@ -961,6 +961,39 @@ files = [
 ]
 
 [[package]]
+name = "rbacx"
+version = "1.18.0"
+description = "RBAC/ABAC policy engine for Python with policy sets, condition DSL, and hot reload"
+optional = false
+python-versions = ">=3.10"
+groups = ["main"]
+files = [
+    {file = "rbacx-1.18.0-py3-none-any.whl", hash = "sha256:9cf251ea3f02f0ae8e3c8337c7ab05d1a2da9be86047f4a3d3eece86357f5ec1"},
+    {file = "rbacx-1.18.0.tar.gz", hash = "sha256:e45232ee9b3328a34819b8869c8aeb18e7d9e1d5a93f370a2ba762435832e1aa"},
+]
+
+[package.extras]
+adapters-drf = ["django (>=4.2)", "djangorestframework (>=3.14)"]
+adapters-fastapi = ["fastapi (>=0.110)", "starlette (>=0.37)"]
+adapters-flask = ["flask (>=2.3)"]
+adapters-litestar = ["litestar (>=2.8)"]
+ai = ["PyYAML (>=6.0)", "openai (>=1.0)"]
+cache-redis = ["redis (>=4.0)"]
+dates = ["python-dateutil (>=2.8)"]
+dev = ["build (>=1.2)", "mypy (>=1.8)", "pre-commit (>=3.7)", "pytest", "pytest-asyncio (>=1.1.0)", "pytest-cov", "ruff (>=0.6)", "twine"]
+docs = ["mkdocs (>=1.6.1,<1.7)", "mkdocs-autorefs (>=1.4.2,<2)", "mkdocs-material (>=9.5.19,<10)", "mkdocs-static-i18n (>=1.2.3,<2)", "mkdocstrings[python] (>=0.26.2,<0.30)"]
+examples = ["django (>=4.2)", "djangorestframework (>=3.14)", "fastapi (>=0.110)", "flask (>=2.3)", "litestar (>=2.8)", "starlette (>=0.37)", "uvicorn (>=0.30)"]
+http = ["requests (>=2.28)"]
+metrics = ["opentelemetry-api (>=1.25)", "prometheus-client (>=0.14)"]
+otel = ["opentelemetry-api (>=1.25)", "opentelemetry-sdk (>=1.19)"]
+rebac-openfga = ["httpx (>=0.25)"]
+rebac-spicedb = ["authzed (>=1.22)", "grpcio (>=1.60)"]
+s3 = ["boto3 (>=1.26)"]
+tests = ["coverage (>=7)", "hypothesis (>=6.140.0)", "pytest (>=8)", "pytest-asyncio (>=1.1.0)"]
+validate = ["jsonschema (>=4.18)"]
+yaml = ["PyYAML (>=6.0)"]
+
+[[package]]
 name = "sqlalchemy"
 version = "2.1.9"
 description = "Database Abstraction Library"
@@ -1157,4 +1190,4 @@ standard = ["httptools (>=0.8.0)", "python-dotenv (>=0.13)", "pyyaml (>=5.1)", "
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.14"
-content-hash = "8b33a9102380ed0e15b9430ed57c35b7baff03a247e05052bffe974a53ccd719"
+content-hash = "39cd0a04f22a49af4aa3a6cd422c185ae42729680c9c34b8850a824e6e496443"

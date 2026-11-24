@@ -3,8 +3,8 @@ from uuid import UUID
 
 from fastapi import Depends, HTTPException
 
-from backend.model.user import User
-from backend.core.settings.settings import get_settings
+from model.user import User
+from core.settings.settings import get_settings
 import jwt
 from fastapi.security import OAuth2PasswordBearer
 

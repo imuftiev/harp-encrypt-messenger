@@ -1,9 +1,9 @@
 import uuid
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import Enum as SAEnum
-from backend.core.db.base import Base
-from backend.model.role import UserRole
-from backend.model.message import Message
+from core.db.base import Base
+from model.role import UserRole
+from model.message import Message
 
 
 class User(Base):

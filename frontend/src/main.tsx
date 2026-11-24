@@ -1,4 +1,4 @@
-import { StrictMode, useState } from 'react';
+import { StrictMode, useEffect, useState } from 'react';
 import type { FormEvent } from 'react';
 import { createRoot } from 'react-dom/client';
 import { api, ApiError } from './api';
@@ -58,7 +58,7 @@ function Auth({ onLogin, notice }: { onLogin: (session: Session) => void; notice
       <button type="button" disabled={busy} aria-pressed={!signUp} onClick={() => { setSignUp(false); setError(''); setStatus(''); }}>Вход</button>
       <button type="button" disabled={busy} aria-pressed={signUp} onClick={() => { setSignUp(true); setError(''); setStatus(''); }}>Регистрация</button>
     </div>
-    <h1>{signUp ? 'Создайте аккаунт' : 'Вход'}</h1>
+    <h1>{signUp ? 'Создайте аккаунт' : 'Вход в Harp'}</h1>
     <form onSubmit={submit} key={String(signUp)}>
       {signUp ? <>
         <label>Имя пользователя<input name="username" autoComplete="username" required minLength={3} maxLength={16} /></label>
@@ -131,7 +131,7 @@ function Messenger({ session, expire }: { session: Session; expire: () => void }
       <section className="card compose" aria-labelledby="recipient-title">
         <h2 id="recipient-title">Получатель</h2>
         <form onSubmit={search}>
-          <label htmlFor="recipient">Имя пользователя</label>
+          <label htmlFor="recipient">Точное имя пользователя</label>
           <div className="search">
             <input id="recipient" value={username} required disabled={searching || sending}
               onChange={(event) => {
@@ -171,17 +171,77 @@ function Messenger({ session, expire }: { session: Session; expire: () => void }
   </>;
 }
 
+function AdminUsers({ expire }: { expire: () => void }) {
+  const [users, setUsers] = useState<User[]>([]);
+  const [query, setQuery] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  async function loadUsers() {
+    setLoading(true);
+    setError('');
+    try {
+      setUsers(await api.users());
+    } catch (failure) {
+      if (failure instanceof ApiError && failure.status === 401) {
+        expire();
+        return;
+      }
+      setError((failure as Error).message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => { void loadUsers(); }, []);
+
+  const filteredUsers = users.filter((user) =>
+    `${user.username} ${user.email}`.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase())
+  );
+
+  return <>
+    <div className="page-heading">
+      <div><h1 className="page-title">Пользователи</h1><p className="muted">Зарегистрированные аккаунты</p></div>
+      <button className="secondary" onClick={() => void loadUsers()} disabled={loading}>{loading ? 'Загрузка…' : 'Обновить'}</button>
+    </div>
+    <section className="card users-card" aria-label="Список пользователей">
+      <div className="users-toolbar">
+        <label htmlFor="user-filter">Поиск по имени или почте</label>
+        <input id="user-filter" type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Начните вводить…" />
+        {!loading && !error && <span className="user-count">{filteredUsers.length} из {users.length}</span>}
+      </div>
+      {error && <div className="empty-state"><p className="error" role="alert">{error}</p><button className="secondary" onClick={() => void loadUsers()}>Попробовать снова</button></div>}
+      {loading && <p className="empty-state muted" role="status">Загружаем пользователей…</p>}
+      {!loading && !error && filteredUsers.length === 0 && <p className="empty-state muted">{users.length ? 'Ничего не найдено.' : 'Пока нет зарегистрированных пользователей.'}</p>}
+      {!loading && !error && filteredUsers.length > 0 && <div className="table-scroll"><table>
+        <thead><tr><th>Пользователь</th><th>Электронная почта</th></tr></thead>
+        <tbody>{filteredUsers.map((user) => <tr key={user.username}>
+          <td><span className="user-name"><span className="avatar" aria-hidden="true">{initial(user.username)}</span>{user.username}</span></td>
+          <td>{user.email}</td>
+        </tr>)}</tbody>
+      </table></div>}
+    </section>
+  </>;
+}
+
 function App() {
   const [session, setSession] = useState<Session | null>(null);
   const [notice, setNotice] = useState('');
+  const [page, setPage] = useState<'messages' | 'users'>('messages');
   return <div className="shell">
     <header className="top">
       <div className="brand"><HarpMark /> Harp</div>
-      {session && <div className="account"><span>{session.user.username}</span>
-        <button className="secondary" onClick={() => { setSession(null); setNotice(''); }}>Выйти</button></div>}
+      {session && <div className="account"><nav className="nav-tabs" aria-label="Основная навигация">
+        <button aria-current={page === 'messages' ? 'page' : undefined} onClick={() => setPage('messages')}>Сообщения</button>
+        <button aria-current={page === 'users' ? 'page' : undefined} onClick={() => setPage('users')}>Админка</button>
+      </nav><span>{session.user.username}</span>
+        <button className="secondary" onClick={() => { setSession(null); setNotice(''); setPage('messages'); }}>Выйти</button></div>}
     </header>
     <main>
-      {session ? <Messenger session={session} expire={() => {
+      {session ? page === 'users' ? <AdminUsers expire={() => {
+        setSession(null);
+        setNotice('Сеанс истёк. Войдите снова.');
+      }} /> : <Messenger session={session} expire={() => {
         setSession(null);
         setNotice('Сеанс истёк. Войдите снова.');
       }} /> : <Auth onLogin={setSession} notice={notice} />}

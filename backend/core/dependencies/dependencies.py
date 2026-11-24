@@ -2,12 +2,12 @@ from typing import Annotated
 from pwdlib import PasswordHash
 from fastapi.params import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
-from backend.service.user_service import UserService
-from backend.service.message_service import MessageService
-from backend.service.auth_service import AuthenticationService
-from backend.repository.user_repository import UserRepository
-from backend.core.db.session import get_session
-from backend.repository.message_repository import MessageRepository
+from service.user_service import UserService
+from service.message_service import MessageService
+from service.auth_service import AuthenticationService
+from repository.user_repository import UserRepository
+from core.db.session import get_session
+from repository.message_repository import MessageRepository
 
 
 def get_password_hash() -> PasswordHash:

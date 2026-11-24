@@ -1,6 +1,6 @@
 from uuid import UUID
-from backend.repository.message_repository import MessageRepository
-from backend.schema.message import MessageCreateRequest, MessageCreateData, MessageResponse
+from repository.message_repository import MessageRepository
+from schema.message import MessageCreateRequest, MessageCreateData, MessageResponse
 
 
 class MessageService:

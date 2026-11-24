@@ -1,10 +1,10 @@
 import datetime
 import uuid
-from backend.model.encryption import Encryption
+from model.encryption import Encryption
 from sqlalchemy import Enum as SAEnum
 from sqlalchemy import String, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from backend.core.db.base import Base
+from core.db.base import Base
 
 
 class Message(Base):

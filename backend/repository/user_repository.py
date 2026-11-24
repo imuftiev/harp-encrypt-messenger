@@ -1,8 +1,8 @@
 from sqlalchemy import select, delete, or_
 from sqlalchemy.ext.asyncio import AsyncSession
-from backend.schema.user import UserCreate, UserRequest
-from backend.model.user import User
-from backend.core.exception.errors import UserEmailAlreadyExists, UserUsernameAlreadyExists
+from schema.user import UserCreate, UserRequest
+from model.user import User
+from core.exception.errors import UserEmailAlreadyExists, UserUsernameAlreadyExists
 
 
 class UserRepository:

@@ -51,6 +51,7 @@ export const api = {
   login: (body: { login: string; password: string }) =>
     request<{ access_token: string; token_type: string }>('/auth/login/', { body }),
   me: (token: string) => request<User>('/users/me', { token }),
+  users: () => request<User[]>('/users/all'),
   async findUser(username: string) {
     // The static GET routes shadow these names. A slash cannot be a path segment.
     if (['all', 'email', 'me', '.', '..'].includes(username) || username.includes('/')) {

@@ -2,7 +2,7 @@ from fastapi import status, FastAPI
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 
-from backend.core.exception.exceptions import AppError, ConflictError
+from core.exception.exceptions import AppError, ConflictError
 
 STATUS_CODE: dict[type[AppError], int] = {
     ConflictError: status.HTTP_409_CONFLICT,
